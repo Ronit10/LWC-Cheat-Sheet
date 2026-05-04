@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LWC Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sf-blue: #00A1E0;
+    --sf-dark: #032D60;
+    --sf-teal: #06AED5;
+    --sf-green: #3BA755;
+    --sf-orange: #FE7921;
+    --sf-purple: #9050E9;
+    --sf-red: #EA001E;
+    --sf-yellow: #FFB75D;
+    --bg: #0A0F1E;
+    --surface: #0E1628;
+    --surface2: #131C35;
+    --border: rgba(0,161,224,0.15);
+    --text: #E8EEF8;
+    --muted: #7A8BA8;
+    --code-bg: #060C1A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, var(--sf-dark) 0%, #053A78 50%, #032D60 100%);
+    padding: 18px 24px 14px;
+    border-bottom: 2px solid var(--sf-blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(0,161,224,0.03) 20px, rgba(0,161,224,0.03) 21px);
+  }
+  .header-left { position: relative; z-index: 1; }
+  .sf-logo {
+    font-size: 9px; font-weight: 800; letter-spacing: 3px;
+    color: var(--sf-blue); text-transform: uppercase; margin-bottom: 2px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sf-logo-icon {
+    width: 22px; height: 22px; background: var(--sf-blue); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: white; font-weight: 800;
+  }
+  .header h1 {
+    font-size: 28px; font-weight: 800; letter-spacing: -0.5px;
+    color: white; line-height: 1;
+  }
+  .header h1 span { color: var(--sf-blue); }
+  .header-sub { font-size: 10px; color: var(--sf-teal); letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
+  .header-right {
+    position: relative; z-index: 1;
+    background: rgba(0,161,224,0.08);
+    border: 1px solid rgba(0,161,224,0.25);
+    border-radius: 8px; padding: 10px 14px;
+    max-width: 220px;
+    font-size: 9.5px; color: var(--muted); line-height: 1.6;
+  }
+  .header-right strong { color: var(--sf-blue); display: block; font-size: 10.5px; margin-bottom: 4px; }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    padding: 1px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    background: var(--surface);
+    padding: 10px 11px;
+  }
+  .section-header {
+    font-size: 9px; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; padding: 5px 8px;
+    border-radius: 4px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .section-header .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; opacity: 0.7;
+  }
+
+  /* colour variants */
+  .c-blue  .section-header { background: rgba(0,161,224,0.12); color: var(--sf-blue); border-left: 3px solid var(--sf-blue); }
+  .c-teal  .section-header { background: rgba(6,174,213,0.12); color: var(--sf-teal); border-left: 3px solid var(--sf-teal); }
+  .c-green .section-header { background: rgba(59,167,85,0.12);  color: var(--sf-green); border-left: 3px solid var(--sf-green); }
+  .c-orange.section-header,
+  .c-orange > .section-header { background: rgba(254,121,33,0.12); color: var(--sf-orange); border-left: 3px solid var(--sf-orange); }
+  .c-purple.section-header,
+  .c-purple > .section-header { background: rgba(144,80,233,0.12); color: var(--sf-purple); border-left: 3px solid var(--sf-purple); }
+  .c-red   .section-header { background: rgba(234,0,30,0.12);   color: var(--sf-red);    border-left: 3px solid var(--sf-red); }
+  .c-yellow.section-header,
+  .c-yellow > .section-header { background: rgba(255,183,93,0.12); color: var(--sf-yellow); border-left: 3px solid var(--sf-yellow); }
+  .c-dark  .section-header { background: rgba(3,45,96,0.4);     color: #7CBAEE;          border-left: 3px solid #7CBAEE; }
+
+  /* code block */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 7px 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    line-height: 1.65;
+    overflow-x: auto;
+    margin: 5px 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .kw  { color: var(--sf-purple); font-weight: 600; }
+  .fn  { color: var(--sf-blue); }
+  .str { color: var(--sf-green); }
+  .cm  { color: var(--muted); font-style: italic; }
+  .tag { color: var(--sf-orange); }
+  .attr{ color: var(--sf-yellow); }
+  .val { color: var(--sf-teal); }
+  .dec { color: var(--sf-red); }
+
+  /* keyword pills */
+  .pills { display: flex; flex-wrap: wrap; gap: 4px; margin: 5px 0; }
+  .pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px; font-weight: 600;
+    padding: 2px 6px; border-radius: 3px;
+    border: 1px solid currentColor; opacity: 0.85;
+  }
+  .pill-blue   { color: var(--sf-blue);   background: rgba(0,161,224,0.1); }
+  .pill-teal   { color: var(--sf-teal);   background: rgba(6,174,213,0.1); }
+  .pill-green  { color: var(--sf-green);  background: rgba(59,167,85,0.1); }
+  .pill-orange { color: var(--sf-orange); background: rgba(254,121,33,0.1); }
+  .pill-purple { color: var(--sf-purple); background: rgba(144,80,233,0.1); }
+  .pill-red    { color: var(--sf-red);    background: rgba(234,0,30,0.1); }
+  .pill-yellow { color: var(--sf-yellow); background: rgba(255,183,93,0.1); }
+
+  /* sub-label */
+  .label {
+    font-size: 8px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted); margin: 7px 0 3px;
+  }
+
+  /* bullet list */
+  ul.tl { list-style: none; padding: 0; }
+  ul.tl li { padding: 2px 0 2px 12px; position: relative; font-size: 10px; }
+  ul.tl li::before { content: '▸'; position: absolute; left: 0; color: var(--sf-blue); font-size: 9px; }
+
+  /* table */
+  table { width: 100%; border-collapse: collapse; font-size: 9.5px; margin: 5px 0; }
+  th { background: rgba(0,161,224,0.1); color: var(--sf-blue); font-weight: 700; padding: 4px 6px; text-align: left; font-size: 8.5px; letter-spacing: 0.5px; }
+  td { padding: 3px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-family: 'JetBrains Mono', monospace; color: var(--sf-teal); font-size: 9px; }
+
+  /* tip box */
+  .tip {
+    background: rgba(255,183,93,0.07);
+    border-left: 3px solid var(--sf-yellow);
+    padding: 5px 8px; border-radius: 0 4px 4px 0;
+    font-size: 9.5px; color: var(--sf-yellow); margin: 6px 0;
+  }
+  .tip::before { content: '💡 '; }
+
+  /* span 2 cols */
+  .span2 { grid-column: span 2; }
+
+  /* footer */
+  .footer {
+    background: var(--sf-dark);
+    padding: 10px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 2px solid var(--sf-blue);
+    font-size: 9px; color: var(--muted);
+  }
+  .footer strong { color: var(--sf-blue); }
+
+  hr.div { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<div class="header">
+  <div class="header-left">
+    <div class="sf-logo">
+      <div class="sf-logo-icon">⚡</div>
+      SALESFORCE
+    </div>
+    <h1>LIGHTNING WEB <span>COMPONENTS</span></h1>
+    <div class="header-sub">Complete LWC Cheat Sheet · All Keywords &amp; Concepts</div>
+  </div>
+  <div class="header-right">
+    <strong>WHAT IS LWC?</strong>
+    Lightning Web Components is Salesforce's modern UI framework based on native Web Component standards (Custom Elements, Shadow DOM, HTML Templates). It runs faster than Aura and uses standard JavaScript.
+  </div>
+</div>
+
+<!-- ══════════ GRID ══════════ -->
+<div class="grid">
+
+  <!-- 1. COMPONENT STRUCTURE -->
+  <div class="section c-blue">
+    <div class="section-header"><span class="num">01</span> COMPONENT STRUCTURE</div>
+    <div class="label">File Structure</div>
+    <pre><span class="cm">myComponent/
+  ├── myComponent.html    ← Template
+  ├── myComponent.js      ← Controller
+  ├── myComponent.js-meta.xml ← Config
+  ├── myComponent.css     ← Styles
+  └── myComponent.svg     ← Icon</span></pre>
+    <div class="label">HTML Template</div>
+    <pre><span class="tag">&lt;template&gt;</span>
+  <span class="tag">&lt;h1&gt;</span>Hello, {name}<span class="tag">&lt;/h1&gt;</span>
+  <span class="tag">&lt;p&gt;</span>{greeting}<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/template&gt;</span></pre>
+    <div class="label">JS Controller</div>
+    <pre><span class="kw">import</span> { LightningElement, track, api, wire }
+  <span class="kw">from</span> <span class="str">'lwc'</span>;
+
+<span class="kw">export default class</span> <span class="fn">MyComponent</span>
+  <span class="kw">extends</span> LightningElement {
+  name = <span class="str">'World'</span>;
+}</pre>
+    <div class="label">Meta Config</div>
+    <pre><span class="tag">&lt;LightningComponentBundle&gt;</span>
+  <span class="tag">&lt;apiVersion&gt;</span>59.0<span class="tag">&lt;/apiVersion&gt;</span>
+  <span class="tag">&lt;isExposed&gt;</span>true<span class="tag">&lt;/isExposed&gt;</span>
+  <span class="tag">&lt;targets&gt;</span>
+    <span class="tag">&lt;target&gt;</span>lightning__AppPage<span class="tag">&lt;/target&gt;</span>
+    <span class="tag">&lt;target&gt;</span>lightning__RecordPage<span class="tag">&lt;/target&gt;</span>
+  <span class="tag">&lt;/targets&gt;</span>
+<span class="tag">&lt;/LightningComponentBundle&gt;</span></pre>
+  </div>
+
+  <!-- 2. DECORATORS -->
+  <div class="section c-purple">
+    <div class="section-header"><span class="num">02</span> DECORATORS</div>
+    <div class="pills">
+      <span class="pill pill-purple">@api</span>
+      <span class="pill pill-purple">@track</span>
+      <span class="pill pill-purple">@wire</span>
+    </div>
+    <div class="label">@api — Public Property</div>
+    <pre><span class="kw">import</span> { LightningElement, <span class="dec">api</span> } <span class="kw">from</span> <span class="str">'lwc'</span>;
+
+<span class="kw">export default class</span> <span class="fn">Child</span>
+  <span class="kw">extends</span> LightningElement {
+  <span class="dec">@api</span> title = <span class="str">'Default'</span>;
+  <span class="cm">// Parent sets via attribute</span>
+  <span class="dec">@api</span> <span class="fn">greet</span>() { <span class="cm">// public method</span>
+    console.log(<span class="str">'Hi!'</span>);
+  }
+}</pre>
+    <div class="label">@track — Reactive (Legacy)</div>
+    <pre><span class="dec">@track</span> obj = { name: <span class="str">'SF'</span> };
+<span class="cm">// Now auto-reactive for primitives
+// @track needed only for deep objects
+// in API < 46.0</span></pre>
+    <div class="label">@wire — Data Binding</div>
+    <pre><span class="kw">import</span> { wire } <span class="kw">from</span> <span class="str">'lwc'</span>;
+<span class="kw">import</span> { getRecord } <span class="kw">from</span>
+  <span class="str">'lightning/uiRecordApi'</span>;
+
+<span class="dec">@wire</span>(getRecord, {
+  recordId: <span class="str">'$recordId'</span>,
+  fields: [FIELDS]
+}) wiredRecord;
+
+<span class="cm">// $ prefix = reactive property</span></pre>
+    <div class="tip">All class fields are now auto-reactive. @track is only needed for deep object mutation tracking in older API versions.</div>
+  </div>
+
+  <!-- 3. TEMPLATE DIRECTIVES -->
+  <div class="section c-teal">
+    <div class="section-header"><span class="num">03</span> TEMPLATE DIRECTIVES</div>
+    <div class="label">Conditional Rendering</div>
+    <pre><span class="cm">&lt;!-- if:true / if:false (legacy) --&gt;</span>
+<span class="tag">&lt;template</span> <span class="attr">if:true</span>=<span class="val">{isVisible}</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Shown!<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="cm">&lt;!-- lwc:if (API 55+) --&gt;</span>
+<span class="tag">&lt;template</span> <span class="attr">lwc:if</span>=<span class="val">{show}</span><span class="tag">&gt;</span>Shown<span class="tag">&lt;/template&gt;</span>
+<span class="tag">&lt;template</span> <span class="attr">lwc:elseif</span>=<span class="val">{maybe}</span><span class="tag">&gt;</span>Maybe<span class="tag">&lt;/template&gt;</span>
+<span class="tag">&lt;template</span> <span class="attr">lwc:else</span><span class="tag">&gt;</span>Hidden<span class="tag">&lt;/template&gt;</span></pre>
+    <div class="label">Iteration</div>
+    <pre><span class="tag">&lt;template</span> <span class="attr">for:each</span>=<span class="val">{items}</span>
+         <span class="attr">for:item</span>=<span class="val">"item"</span>
+         <span class="attr">for:index</span>=<span class="val">"i"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">key</span>=<span class="val">{item.id}</span><span class="tag">&gt;</span>
+    {i}: {item.name}
+  <span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/template&gt;</span>
+
+<span class="cm">&lt;!-- iterator directive --&gt;</span>
+<span class="tag">&lt;template</span> <span class="attr">iterator:it</span>=<span class="val">{items}</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li</span> <span class="attr">key</span>=<span class="val">{it.value.id}</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;template</span> <span class="attr">if:true</span>=<span class="val">{it.first}</span><span class="tag">&gt;</span>FIRST<span class="tag">&lt;/template&gt;</span>
+    {it.value.name}
+    <span class="tag">&lt;template</span> <span class="attr">if:true</span>=<span class="val">{it.last}</span><span class="tag">&gt;</span>LAST<span class="tag">&lt;/template&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/template&gt;</span></pre>
+    <div class="label">Key Directives</div>
+    <div class="pills">
+      <span class="pill pill-teal">if:true</span><span class="pill pill-teal">if:false</span>
+      <span class="pill pill-teal">lwc:if</span><span class="pill pill-teal">lwc:elseif</span><span class="pill pill-teal">lwc:else</span>
+      <span class="pill pill-teal">for:each</span><span class="pill pill-teal">for:item</span><span class="pill pill-teal">for:index</span>
+      <span class="pill pill-teal">iterator:it</span><span class="pill pill-teal">key</span>
+      <span class="pill pill-teal">lwc:ref</span><span class="pill pill-teal">lwc:dom</span>
+    </div>
+  </div>
+
+  <!-- 4. LIFECYCLE HOOKS -->
+  <div class="section c-green">
+    <div class="section-header"><span class="num">04</span> LIFECYCLE HOOKS</div>
+    <pre><span class="kw">import</span> { LightningElement } <span class="kw">from</span> <span class="str">'lwc'</span>;
+
+<span class="kw">export default class</span> <span class="fn">Demo</span>
+  <span class="kw">extends</span> LightningElement {
+
+  <span class="cm">// 1st — property init, no DOM yet</span>
+  <span class="fn">constructor</span>() {
+    <span class="kw">super</span>();
+  }
+
+  <span class="cm">// 2nd — inserted into DOM</span>
+  <span class="fn">connectedCallback</span>() { }
+
+  <span class="cm">// 3rd — component fully rendered</span>
+  <span class="fn">renderedCallback</span>() { }
+
+  <span class="cm">// removed from DOM</span>
+  <span class="fn">disconnectedCallback</span>() { }
+
+  <span class="cm">// uncaught error in child</span>
+  <span class="fn">errorCallback</span>(error, stack) { }
+}</pre>
+    <table>
+      <tr><th>Hook</th><th>Timing</th></tr>
+      <tr><td>constructor()</td><td>Before render, no DOM</td></tr>
+      <tr><td>connectedCallback()</td><td>In DOM, not rendered</td></tr>
+      <tr><td>renderedCallback()</td><td>After every render</td></tr>
+      <tr><td>disconnectedCallback()</td><td>Removed from DOM</td></tr>
+      <tr><td>errorCallback()</td><td>Child error caught</td></tr>
+    </table>
+    <div class="tip">Use a boolean flag in renderedCallback() to run logic only once on first render.</div>
+  </div>
+
+  <!-- 5. PROPERTIES & DATA BINDING -->
+  <div class="section c-orange">
+    <div class="section-header"><span class="num">05</span> PROPERTIES &amp; DATA BINDING</div>
+    <div class="label">One-Way Binding</div>
+    <pre><span class="cm">&lt;!-- Expression --&gt;</span>
+<span class="tag">&lt;p&gt;</span>Hello {firstName} {lastName}<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">{imgUrl}</span> <span class="attr">alt</span>=<span class="val">"photo"</span><span class="tag">/&gt;</span>
+
+<span class="cm">&lt;!-- Computed getter --&gt;</span>
+<span class="kw">get</span> <span class="fn">fullName</span>() {
+  <span class="kw">return</span> <span class="str">`</span>${<span class="kw">this</span>.first} ${<span class="kw">this</span>.last}<span class="str">`</span>;
+}</pre>
+    <div class="label">Two-Way (via Events)</div>
+    <pre><span class="tag">&lt;lightning-input</span>
+  <span class="attr">value</span>=<span class="val">{name}</span>
+  <span class="attr">onchange</span>=<span class="val">{handleChange}</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/lightning-input&gt;</span>
+
+<span class="fn">handleChange</span>(e) {
+  <span class="kw">this</span>.name = e.detail.value;
+}</pre>
+    <div class="label">Getters &amp; Setters</div>
+    <pre><span class="kw">private</span> _items = [];
+
+<span class="dec">@api</span>
+<span class="kw">get</span> <span class="fn">items</span>() { <span class="kw">return this</span>._items; }
+<span class="kw">set</span> <span class="fn">items</span>(val) {
+  <span class="kw">this</span>._items = [...val].sort();
+}</pre>
+    <div class="label">Reactive Properties</div>
+    <div class="pills">
+      <span class="pill pill-orange">reactive (auto)</span>
+      <span class="pill pill-orange">@api</span>
+      <span class="pill pill-orange">@track (deep)</span>
+      <span class="pill pill-orange">getter</span>
+      <span class="pill pill-orange">setter</span>
+    </div>
+  </div>
+
+  <!-- 6. EVENTS -->
+  <div class="section c-red">
+    <div class="section-header"><span class="num">06</span> EVENTS</div>
+    <div class="label">Dispatching (Child → Parent)</div>
+    <pre><span class="cm">// Child dispatches</span>
+<span class="kw">this</span>.dispatchEvent(
+  <span class="kw">new</span> CustomEvent(<span class="str">'select'</span>, {
+    detail: { id: <span class="str">'001'</span>, name: <span class="str">'SF'</span> },
+    bubbles: <span class="kw">true</span>,
+    composed: <span class="kw">true</span>  <span class="cm">// cross Shadow DOM</span>
+  })
+);</pre>
+    <div class="label">Listening (Parent)</div>
+    <pre><span class="cm">&lt;!-- Declarative --&gt;</span>
+<span class="tag">&lt;c-child</span> <span class="attr">onselect</span>=<span class="val">{handleSelect}</span><span class="tag">&gt;</span><span class="tag">&lt;/c-child&gt;</span>
+
+<span class="cm">// Programmatic</span>
+<span class="fn">connectedCallback</span>() {
+  <span class="kw">this</span>.template.addEventListener(
+    <span class="str">'select'</span>, <span class="kw">this</span>.handleSelect.bind(<span class="kw">this</span>)
+  );
+}
+<span class="fn">handleSelect</span>(e) {
+  console.log(e.detail.id);
+}</pre>
+    <div class="label">Event Properties</div>
+    <table>
+      <tr><th>Property</th><th>Description</th></tr>
+      <tr><td>bubbles</td><td>Propagates up DOM</td></tr>
+      <tr><td>composed</td><td>Crosses Shadow DOM</td></tr>
+      <tr><td>cancelable</td><td>Can preventDefault()</td></tr>
+      <tr><td>detail</td><td>Custom payload object</td></tr>
+    </table>
+  </div>
+
+  <!-- 7. WIRE SERVICE -->
+  <div class="section c-blue">
+    <div class="section-header"><span class="num">07</span> WIRE SERVICE</div>
+    <div class="label">Wire to Property</div>
+    <pre><span class="kw">import</span> { wire } <span class="kw">from</span> <span class="str">'lwc'</span>;
+<span class="kw">import</span> getAccounts
+  <span class="kw">from</span> <span class="str">'@salesforce/apex/AccCtrl.getList'</span>;
+
+<span class="dec">@wire</span>(getAccounts, { type: <span class="str">'$accType'</span> })
+wiredAccts; <span class="cm">// {data, error}</span>
+
+<span class="cm">// In template:</span>
+<span class="cm">// {wiredAccts.data} / {wiredAccts.error}</span></pre>
+    <div class="label">Wire to Function</div>
+    <pre><span class="dec">@wire</span>(getAccounts, { type: <span class="str">'$type'</span> })
+<span class="fn">wiredHandler</span>({ data, error }) {
+  <span class="kw">if</span> (data) {
+    <span class="kw">this</span>.accounts = data;
+  } <span class="kw">else if</span> (error) {
+    <span class="kw">this</span>.error = error;
+  }
+}</pre>
+    <div class="label">UI API Wire Adapters</div>
+    <table>
+      <tr><th>Adapter</th><th>Module</th></tr>
+      <tr><td>getRecord</td><td>lightning/uiRecordApi</td></tr>
+      <tr><td>getRecordNotifyChange</td><td>lightning/uiRecordApi</td></tr>
+      <tr><td>getObjectInfo</td><td>lightning/uiObjectInfoApi</td></tr>
+      <tr><td>getPicklistValues</td><td>lightning/uiObjectInfoApi</td></tr>
+      <tr><td>getRelatedListRecords</td><td>lightning/uiRelatedListApi</td></tr>
+    </table>
+  </div>
+
+  <!-- 8. APEX INTEGRATION -->
+  <div class="section c-teal">
+    <div class="section-header"><span class="num">08</span> APEX INTEGRATION</div>
+    <div class="label">Wire Apex</div>
+    <pre><span class="kw">import</span> getContacts
+  <span class="kw">from</span> <span class="str">'@salesforce/apex/ContactCtrl.getContacts'</span>;
+
+<span class="dec">@wire</span>(getContacts, { accId: <span class="str">'$accountId'</span> })
+contacts;</pre>
+    <div class="label">Imperative Apex</div>
+    <pre><span class="kw">import</span> saveContact
+  <span class="kw">from</span> <span class="str">'@salesforce/apex/ContactCtrl.save'</span>;
+
+<span class="kw">async</span> <span class="fn">handleSave</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> result = <span class="kw">await</span> saveContact({
+      con: <span class="kw">this</span>.contact
+    });
+    <span class="cm">// handle success</span>
+  } <span class="kw">catch</span>(e) {
+    <span class="cm">// handle error</span>
+  }
+}</pre>
+    <div class="label">Apex Method Rules</div>
+    <ul class="tl">
+      <li>Must be <code>@AuraEnabled</code></li>
+      <li><code>cacheable=true</code> required for @wire</li>
+      <li>Must be <code>public static</code></li>
+      <li>Cacheable methods cannot DML</li>
+    </ul>
+  </div>
+
+  <!-- 9. COMMUNICATION PATTERNS -->
+  <div class="section c-purple span2">
+    <div class="section-header"><span class="num">09</span> COMPONENT COMMUNICATION PATTERNS</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div>
+        <div class="label">Parent → Child (@api)</div>
+        <pre><span class="cm">&lt;!-- Parent Template --&gt;</span>
+<span class="tag">&lt;c-child</span>
+  <span class="attr">title</span>=<span class="val">"Hello"</span>
+  <span class="attr">count</span>=<span class="val">{num}</span>
+  <span class="attr">items</span>=<span class="val">{list}</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/c-child&gt;</span>
+
+<span class="cm">// Child JS</span>
+<span class="dec">@api</span> title;
+<span class="dec">@api</span> count;
+<span class="dec">@api</span> items;</pre>
+      </div>
+      <div>
+        <div class="label">Child → Parent (Events)</div>
+        <pre><span class="cm">// Child fires event</span>
+<span class="fn">handleClick</span>() {
+  <span class="kw">this</span>.dispatchEvent(
+    <span class="kw">new</span> CustomEvent(<span class="str">'done'</span>, {
+      detail: <span class="kw">this</span>.result
+    })
+  );
+}
+
+<span class="cm">&lt;!-- Parent listens --&gt;</span>
+<span class="tag">&lt;c-child</span>
+  <span class="attr">ondone</span>=<span class="val">{handleDone}</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/c-child&gt;</span></pre>
+      </div>
+      <div>
+        <div class="label">Across Tree (PubSub / LMS)</div>
+        <pre><span class="kw">import</span> { publish,
+  MessageContext }
+  <span class="kw">from</span> <span class="str">'lightning/messageService'</span>;
+<span class="kw">import</span> CHANNEL
+  <span class="kw">from</span> <span class="str">'@salesforce/messageChannel/MyChannel__c'</span>;
+
+<span class="dec">@wire</span>(MessageContext) ctx;
+
+<span class="fn">sendMsg</span>() {
+  publish(<span class="kw">this</span>.ctx, CHANNEL,
+    { payload: <span class="str">'hello'</span> });
+}
+
+<span class="kw">import</span> { subscribe }
+  <span class="kw">from</span> <span class="str">'lightning/messageService'</span>;
+
+<span class="fn">connectedCallback</span>() {
+  <span class="kw">this</span>.sub = subscribe(
+    <span class="kw">this</span>.ctx, CHANNEL, (msg) => {
+    console.log(msg.payload);
+  });
+}</pre>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">
+      <div>
+        <div class="label">Call Child Method</div>
+        <pre><span class="cm">&lt;!-- Template --&gt;</span>
+<span class="tag">&lt;c-child</span> <span class="attr">lwc:ref</span>=<span class="val">"childRef"</span><span class="tag">&gt;</span><span class="tag">&lt;/c-child&gt;</span>
+
+<span class="cm">// JS — call public method</span>
+<span class="fn">handleClick</span>() {
+  <span class="kw">this</span>.refs.childRef.greet();
+}</pre>
+      </div>
+      <div>
+        <div class="label">querySelector Access</div>
+        <pre><span class="cm">// Single element</span>
+<span class="kw">this</span>.template.querySelector(<span class="str">'c-child'</span>);
+<span class="kw">this</span>.template.querySelector(<span class="str">'[data-id="x"]'</span>);
+
+<span class="cm">// Multiple elements</span>
+<span class="kw">this</span>.template.querySelectorAll(<span class="str">'c-item'</span>);
+
+<span class="cm">// After renderedCallback() only!</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. LIGHTNING DATA SERVICE -->
+  <div class="section c-green">
+    <div class="section-header"><span class="num">10</span> LIGHTNING DATA SERVICE</div>
+    <div class="label">lightning-record-form</div>
+    <pre><span class="tag">&lt;lightning-record-form</span>
+  <span class="attr">record-id</span>=<span class="val">{recordId}</span>
+  <span class="attr">object-api-name</span>=<span class="val">"Account"</span>
+  <span class="attr">fields</span>=<span class="val">{fields}</span>
+  <span class="attr">mode</span>=<span class="val">"edit"</span>
+  <span class="attr">onsuccess</span>=<span class="val">{handleSuccess}</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/lightning-record-form&gt;</span></pre>
+    <div class="label">lightning-record-edit-form</div>
+    <pre><span class="tag">&lt;lightning-record-edit-form</span>
+  <span class="attr">object-api-name</span>=<span class="val">"Contact"</span>
+  <span class="attr">onsuccess</span>=<span class="val">{success}</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;lightning-input-field</span>
+    <span class="attr">field-name</span>=<span class="val">"FirstName"</span><span class="tag">&gt;</span><span class="tag">&lt;/lightning-input-field&gt;</span>
+  <span class="tag">&lt;lightning-button</span>
+    <span class="attr">type</span>=<span class="val">"submit"</span><span class="tag">&gt;</span><span class="tag">&lt;/lightning-button&gt;</span>
+<span class="tag">&lt;/lightning-record-edit-form&gt;</span></pre>
+    <div class="label">Modes</div>
+    <div class="pills">
+      <span class="pill pill-green">view</span>
+      <span class="pill pill-green">edit</span>
+      <span class="pill pill-green">readonly</span>
+    </div>
+  </div>
+
+  <!-- 11. IMPORTS & SCHEMA -->
+  <div class="section c-orange">
+    <div class="section-header"><span class="num">11</span> IMPORTS &amp; SCHEMA</div>
+    <div class="label">Static Resources</div>
+    <pre><span class="kw">import</span> myImg
+  <span class="kw">from</span> <span class="str">'@salesforce/resourceUrl/myImage'</span>;
+<span class="kw">import</span> { loadScript, loadStyle }
+  <span class="kw">from</span> <span class="str">'lightning/platformResourceLoader'</span>;</pre>
+    <div class="label">Custom Labels</div>
+    <pre><span class="kw">import</span> myLabel
+  <span class="kw">from</span> <span class="str">'@salesforce/label/c.MyLabel'</span>;
+<span class="cm">// In template: {label.myLabel}</span></pre>
+    <div class="label">Schema (Object/Field Refs)</div>
+    <pre><span class="kw">import</span> ACCOUNT_OBJECT
+  <span class="kw">from</span> <span class="str">'@salesforce/schema/Account'</span>;
+<span class="kw">import</span> NAME_FIELD
+  <span class="kw">from</span> <span class="str">'@salesforce/schema/Account.Name'</span>;
+<span class="kw">import</span> { getFieldValue }
+  <span class="kw">from</span> <span class="str">'lightning/uiRecordApi'</span>;</pre>
+    <div class="label">User Info</div>
+    <pre><span class="kw">import</span> userId
+  <span class="kw">from</span> <span class="str">'@salesforce/user/Id'</span>;
+<span class="kw">import</span> isGuest
+  <span class="kw">from</span> <span class="str">'@salesforce/user/isGuest'</span>;</pre>
+    <div class="label">Permissions / Feature Checks</div>
+    <pre><span class="kw">import</span> canEdit
+  <span class="kw">from</span> <span class="str">'@salesforce/userPermission/EditTask'</span>;
+<span class="kw">import</span> hasFeature
+  <span class="kw">from</span> <span class="str">'@salesforce/featureFlag/myFlag'</span>;</pre>
+  </div>
+
+  <!-- 12. NAVIGATION -->
+  <div class="section c-blue">
+    <div class="section-header"><span class="num">12</span> NAVIGATION SERVICE</div>
+    <pre><span class="kw">import</span> { NavigationMixin }
+  <span class="kw">from</span> <span class="str">'lightning/navigation'</span>;
+
+<span class="kw">export default class</span> <span class="fn">Nav</span>
+  <span class="kw">extends</span> NavigationMixin(LightningElement) {
+
+  <span class="fn">goToRecord</span>() {
+    <span class="kw">this</span>[NavigationMixin.Navigate]({
+      type: <span class="str">'standard__recordPage'</span>,
+      attributes: {
+        recordId: <span class="str">'001...'</span>,
+        actionName: <span class="str">'view'</span>
+      }
+    });
+  }
+}</pre>
+    <table>
+      <tr><th>PageRef Type</th><th>Usage</th></tr>
+      <tr><td>standard__recordPage</td><td>View/edit a record</td></tr>
+      <tr><td>standard__objectPage</td><td>Object home / list</td></tr>
+      <tr><td>standard__namedPage</td><td>Home, chatter etc.</td></tr>
+      <tr><td>standard__webPage</td><td>External URL</td></tr>
+      <tr><td>standard__component</td><td>Lightning component</td></tr>
+    </table>
+    <div class="label">Generate URL</div>
+    <pre><span class="kw">this</span>[NavigationMixin.GenerateUrl](pageRef)
+  .then(url => { <span class="kw">this</span>.url = url; });</pre>
+  </div>
+
+  <!-- 13. CSS & STYLING -->
+  <div class="section c-teal">
+    <div class="section-header"><span class="num">13</span> CSS &amp; STYLING</div>
+    <div class="label">Scoped CSS (Shadow DOM)</div>
+    <pre><span class="cm">/* myComponent.css — auto-scoped */</span>
+.container { display: flex; }
+h1 { color: blue; }
+
+<span class="cm">/* :host selects the component root */</span>
+:host { display: block; }
+:host([variant="error"]) {
+  border: 2px solid red;
+}</pre>
+    <div class="label">CSS Custom Properties (Cross)</div>
+    <pre><span class="cm">/* Define in parent */</span>
+--lwc-colorBrand: #00A1E0;
+
+<span class="cm">/* Consume in child */</span>
+color: var(--lwc-colorBrand);</pre>
+    <div class="label">Dynamic Classes</div>
+    <pre><span class="kw">get</span> <span class="fn">btnClass</span>() {
+  <span class="kw">return</span> <span class="str">`btn ${this.isActive
+    ? 'btn--active' : ''}`</span>;
+}
+<span class="cm">&lt;!-- Template --&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="val">{btnClass}</span><span class="tag">&gt;</span>Click<span class="tag">&lt;/button&gt;</span></pre>
+    <div class="label">SLDS Utility Classes</div>
+    <div class="pills">
+      <span class="pill pill-teal">slds-m-around_medium</span>
+      <span class="pill pill-teal">slds-grid</span>
+      <span class="pill pill-teal">slds-col</span>
+      <span class="pill pill-teal">slds-p-around_small</span>
+      <span class="pill pill-teal">slds-text-heading_large</span>
+    </div>
+  </div>
+
+  <!-- 14. SLOTS -->
+  <div class="section c-yellow">
+    <div class="section-header"><span class="num">14</span> SLOTS</div>
+    <div class="label">Default Slot</div>
+    <pre><span class="cm">&lt;!-- Child template --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"wrapper"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;slot&gt;</span>Fallback content<span class="tag">&lt;/slot&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cm">&lt;!-- Parent usage --&gt;</span>
+<span class="tag">&lt;c-child&gt;</span>
+  <span class="tag">&lt;p&gt;</span>This fills the slot!<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/c-child&gt;</span></pre>
+    <div class="label">Named Slots</div>
+    <pre><span class="cm">&lt;!-- Child --&gt;</span>
+<span class="tag">&lt;header&gt;</span><span class="tag">&lt;slot</span> <span class="attr">name</span>=<span class="val">"header"</span><span class="tag">&gt;</span><span class="tag">&lt;/slot&gt;</span><span class="tag">&lt;/header&gt;</span>
+<span class="tag">&lt;main&gt;</span><span class="tag">&lt;slot&gt;</span><span class="tag">&lt;/slot&gt;</span><span class="tag">&lt;/main&gt;</span>
+
+<span class="cm">&lt;!-- Parent --&gt;</span>
+<span class="tag">&lt;c-child&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">slot</span>=<span class="val">"header"</span><span class="tag">&gt;</span>TITLE<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Body content<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/c-child&gt;</span></pre>
+    <div class="tip">slotchange event fires when slot content changes.</div>
+  </div>
+
+  <!-- 15. TESTING -->
+  <div class="section c-green">
+    <div class="section-header"><span class="num">15</span> TESTING (JEST)</div>
+    <pre><span class="kw">import</span> { createElement }
+  <span class="kw">from</span> <span class="str">'lwc'</span>;
+<span class="kw">import</span> MyComp
+  <span class="kw">from</span> <span class="str">'c/myComp'</span>;
+
+describe(<span class="str">'c-my-comp'</span>, () => {
+  <span class="fn">afterEach</span>(() => {
+    <span class="cm">// Reset DOM</span>
+    <span class="kw">while</span>(document.body.firstChild)
+      document.body.removeChild(
+        document.body.firstChild);
+  });
+
+  it(<span class="str">'renders title'</span>, () => {
+    <span class="kw">const</span> el = createElement(<span class="str">'c-my-comp'</span>,
+      { is: MyComp });
+    el.title = <span class="str">'Hello'</span>;
+    document.body.appendChild(el);
+    <span class="kw">const</span> h1 = el.shadowRoot
+      .querySelector(<span class="str">'h1'</span>);
+    expect(h1.textContent)
+      .toBe(<span class="str">'Hello'</span>);
+  });
+});</pre>
+    <div class="label">Mock Apex in Jest</div>
+    <pre><span class="cm">// __mocks__/
+//   @salesforce/apex/MyCtrl.getData.js
+const getData = jest.fn();
+export default getData;
+
+<span class="cm">// In test</span>
+getData.mockResolvedValue([...]);</span></pre>
+  </div>
+
+  <!-- 16. COMMON BASE COMPONENTS -->
+  <div class="section c-blue span2">
+    <div class="section-header"><span class="num">16</span> COMMON BASE LIGHTNING COMPONENTS</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div>
+        <table>
+          <tr><th>Component</th><th>Key Attributes</th></tr>
+          <tr><td>lightning-button</td><td>label, variant, onclick</td></tr>
+          <tr><td>lightning-input</td><td>type, value, label, onchange</td></tr>
+          <tr><td>lightning-textarea</td><td>value, label, max-length</td></tr>
+          <tr><td>lightning-combobox</td><td>options, value, onchange</td></tr>
+          <tr><td>lightning-datepicker</td><td>value, min, max</td></tr>
+          <tr><td>lightning-checkbox-group</td><td>options, value</td></tr>
+          <tr><td>lightning-radio-group</td><td>options, value, type</td></tr>
+          <tr><td>lightning-data-table</td><td>columns, data, key-field</td></tr>
+          <tr><td>lightning-card</td><td>title, icon-name</td></tr>
+          <tr><td>lightning-badge</td><td>label</td></tr>
+        </table>
+      </div>
+      <div>
+        <table>
+          <tr><th>Component</th><th>Key Attributes</th></tr>
+          <tr><td>lightning-spinner</td><td>size, alternative-text</td></tr>
+          <tr><td>lightning-toast</td><td>label, message, variant</td></tr>
+          <tr><td>lightning-icon</td><td>icon-name, size, variant</td></tr>
+          <tr><td>lightning-formatted-text</td><td>value</td></tr>
+          <tr><td>lightning-formatted-date-time</td><td>value, year, month, day</td></tr>
+          <tr><td>lightning-formatted-number</td><td>value, format-style</td></tr>
+          <tr><td>lightning-layout</td><td>horizontal-align, vertical-align</td></tr>
+          <tr><td>lightning-layout-item</td><td>size, flexibility</td></tr>
+          <tr><td>lightning-tab</td><td>label, value</td></tr>
+          <tr><td>lightning-modal</td><td>size, label (extends)</td></tr>
+        </table>
+        <div class="label">Toast Notification</div>
+        <pre><span class="kw">import</span> { ShowToastEvent }
+  <span class="kw">from</span> <span class="str">'lightning/platformShowToastEvent'</span>;
+
+<span class="kw">this</span>.dispatchEvent(<span class="kw">new</span> ShowToastEvent({
+  title: <span class="str">'Success!'</span>,
+  message: <span class="str">'Record saved.'</span>,
+  variant: <span class="str">'success'</span> <span class="cm">// success|error|warning|info</span>
+}));</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 17. BEST PRACTICES -->
+  <div class="section c-orange">
+    <div class="section-header"><span class="num">17</span> BEST PRACTICES</div>
+    <ul class="tl">
+      <li>Use <code>@api</code> only for public interface</li>
+      <li>Prefer <code>lwc:if</code> over <code>if:true</code> (API 55+)</li>
+      <li>Always add <code>key</code> in iterations</li>
+      <li>Avoid DOM manipulation in constructor</li>
+      <li>Unsubscribe LMS in disconnectedCallback</li>
+      <li>Use <code>cacheable=true</code> for read-only wire</li>
+      <li>Avoid <code>@track</code> — not needed for primitives</li>
+      <li>Use <code>getters</code> for computed template values</li>
+      <li>Never mutate <code>@api</code> props directly</li>
+      <li>Use <code>lwc:ref</code> over querySelector when possible</li>
+    </ul>
+    <hr class="div">
+    <div class="tip">Use <code>refreshApex(wiredProperty)</code> to reload wired data after DML.</div>
+  </div>
+
+  <!-- 18. EXCEPTIONS & DEBUG -->
+  <div class="section c-red">
+    <div class="section-header"><span class="num">18</span> COMMON ERRORS &amp; DEBUG</div>
+    <table>
+      <tr><th>Error</th><th>Cause / Fix</th></tr>
+      <tr><td>Cannot set property of undefined</td><td>DOM access in constructor — use connectedCallback</td></tr>
+      <tr><td>Property is not observable</td><td>Assign new object; don't mutate nested without @track</td></tr>
+      <tr><td>Cannot read property 'data'</td><td>Wire not loaded yet — check for undefined</td></tr>
+      <tr><td>Aura method not found</td><td>Method must be @api decorated</td></tr>
+      <tr><td>FIELD_INTEGRITY_EXCEPTION</td><td>Wrong field API name in schema import</td></tr>
+    </table>
+    <div class="label">Debug Tools</div>
+    <ul class="tl">
+      <li>Setup → Debug Mode (enables better errors)</li>
+      <li>Chrome DevTools → LWC tab</li>
+      <li><code>System.debug()</code> for Apex side</li>
+      <li>Salesforce Inspector extension</li>
+    </ul>
+  </div>
+
+  <!-- 19. QUICK CHECKLIST -->
+  <div class="section c-purple">
+    <div class="section-header"><span class="num">19</span> QUICK CHECKLIST</div>
+    <div class="label">Component Checklist</div>
+    <ul class="tl">
+      <li>File names match folder name (camelCase)</li>
+      <li>Meta XML has correct apiVersion + targets</li>
+      <li>@api on all public props/methods</li>
+      <li>key set on all for:each iterations</li>
+      <li>lwc:if used for conditional (API 55+)</li>
+      <li>Error + loading states handled in wire</li>
+      <li>Events: detail, bubbles, composed set</li>
+      <li>LMS subscription cleaned up on disconnect</li>
+      <li>refreshApex called after DML mutations</li>
+      <li>Jest tests cover happy + error paths</li>
+    </ul>
+    <hr class="div">
+    <div class="label">All Core Keywords</div>
+    <div class="pills">
+      <span class="pill pill-blue">LightningElement</span>
+      <span class="pill pill-purple">@api</span>
+      <span class="pill pill-purple">@track</span>
+      <span class="pill pill-purple">@wire</span>
+      <span class="pill pill-teal">lwc:if</span>
+      <span class="pill pill-teal">lwc:elseif</span>
+      <span class="pill pill-teal">lwc:else</span>
+      <span class="pill pill-teal">for:each</span>
+      <span class="pill pill-teal">iterator:it</span>
+      <span class="pill pill-teal">lwc:ref</span>
+      <span class="pill pill-green">connectedCallback</span>
+      <span class="pill pill-green">renderedCallback</span>
+      <span class="pill pill-green">disconnectedCallback</span>
+      <span class="pill pill-orange">CustomEvent</span>
+      <span class="pill pill-orange">dispatchEvent</span>
+      <span class="pill pill-red">NavigationMixin</span>
+      <span class="pill pill-yellow">refreshApex</span>
+      <span class="pill pill-blue">getRecord</span>
+      <span class="pill pill-blue">publish</span>
+      <span class="pill pill-blue">subscribe</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<div class="footer">
+  <span>⚡ <strong>LIGHTNING WEB COMPONENTS</strong> — Build Faster. Deploy Smarter. Scale Effortlessly.</span>
+  <span>Optimize · Automate · Scale with <strong>Salesforce LWC</strong></span>
+</div>
+
+</body>
+</html>
